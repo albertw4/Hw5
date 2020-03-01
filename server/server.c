@@ -67,6 +67,38 @@ int main()
     char* portNum = "30000";
     char* host = "localhost";
     char client_hostname[MAXLINE], client_port[MAXLINE];
+    FILE *fp = fopen("data_base.csv", "r");
+
+    char data[300][8][10];
+    int i = 0;
+    char *pt;
+
+
+    if(fp != NULL){
+      char line[1024];
+
+      while(fgets(line, sizeof line, fp) != NULL){
+        int j = 0;
+        pt = strtok (line,",");
+        while (pt != NULL) {
+          printf("current: %d, %d\n",i,j);
+            strcpy(data[i][j], pt);
+            printf("in data: %s\n", data[i][j]);
+            printf("%s\n", pt);
+            pt = strtok (NULL, ",");
+            j++;
+        }
+        i++;
+      }
+      printf("done");
+      fclose(fp);
+    }else{
+      printf("cant open file");
+    }
+
+    for(int f = 0; f < 7; f++){
+    //  printf("Ex: %c", data[10][f]);
+    }
 
     while(1){
         listenfd = open_listenfd(portNum); //change to argv[1] later
