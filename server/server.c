@@ -9,6 +9,7 @@
 
 typedef struct sockaddr SA;
 int MAXLINE = 256;
+char data[300][8][10];
 
 
 int open_listenfd(char* portNum){
@@ -55,7 +56,47 @@ void echo(int connfd){
     char buf[MAXLINE];
     while((n = read(connfd, buf, MAXLINE)) != 0) {
         printf("server received %d bytes\n", (int)n);
-        write(connfd, buf, n);
+        char * token = strtok(buf, " ");
+        char str[2][100];
+        char result[100];
+        int i = 0;
+
+        while(token != NULL){
+           strcpy(str[i],token);
+           i++;
+           token = strtok(NULL, " ");
+        }
+
+        for(int i = 1; i < 270; i++){
+
+          if(strcmp(str[0], data[i][1]) == 0){
+
+            if(strcmp(str[1], "type") == 0){
+              strcpy(result, data[i][0]);
+            }else if(strcmp(str[1], "game_id") == 0){
+              strcpy(result, data[i][1]);
+            }else if(strcmp(str[1], "home_team") == 0){
+              strcpy(result, data[i][2]);
+            }else if(strcmp(str[1], "away_team") == 0){
+              strcpy(result, data[i][4]);
+            }else if(strcmp(str[1], "week") == 0){
+              strcpy(result, data[i][5]);
+            }else if(strcmp(str[1], "season") == 0){
+              strcpy(result, data[i][6]);
+            }else if(strcmp(str[1], "home_score") == 0){
+              strcpy(result, data[i][7]);
+            }else if(strcmp(str[1], "away_score") == 0){
+              strcpy(result, data[i][8]);
+            }else{
+              strcpy(result, "unknown1");
+            }
+            break;
+          }else{
+            strcpy(result, "unknown2");
+          }
+        }
+
+        write(connfd, result, n);
     }
 }
 
@@ -69,10 +110,8 @@ int main()
     char client_hostname[MAXLINE], client_port[MAXLINE];
     FILE *fp = fopen("data_base.csv", "r");
 
-    char data[300][8][10];
     int i = 0;
     char *pt;
-
 
     if(fp != NULL){
       char line[1024];
@@ -81,23 +120,23 @@ int main()
         int j = 0;
         pt = strtok (line,",");
         while (pt != NULL) {
-          printf("current: %d, %d\n",i,j);
             strcpy(data[i][j], pt);
-            printf("in data: %s\n", data[i][j]);
-            printf("%s\n", pt);
             pt = strtok (NULL, ",");
             j++;
         }
         i++;
       }
-      printf("done");
       fclose(fp);
     }else{
       printf("cant open file");
     }
 
-    for(int f = 0; f < 7; f++){
-    //  printf("Ex: %c", data[10][f]);
+    for(int j = 0; j < 270; j++){
+      printf("%d:",j);
+      for(int k = 0; k <8; k++){
+        printf(" %s", data[j][k]);
+      }
+      printf("\n");
     }
 
     while(1){
