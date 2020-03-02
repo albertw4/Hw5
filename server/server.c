@@ -54,12 +54,13 @@ int open_listenfd(char* portNum){
 void echo(int connfd){
     size_t n;
     char buf[MAXLINE];
+    printf("server started");
     while((n = read(connfd, buf, MAXLINE)) != 0) {
-        printf("server received %d bytes\n", (int)n);
         char * token = strtok(buf, " ");
-        char str[2][100];
+        char str[2][10];
         char result[100];
         int i = 0;
+        int length = 0;
 
         while(token != NULL){
            strcpy(str[i],token);
@@ -69,30 +70,37 @@ void echo(int connfd){
 
         for(int i = 1; i < 270; i++){
 
-          if(strcmp(str[0], data[i][1]) == 0){
-
-            if(strcmp(str[1], "type") == 0){
+          if(strncmp(str[0], data[i][1],10) == 0){
+            if(strncmp(str[1], "type",4) == 0){
               strcpy(result, data[i][0]);
-            }else if(strcmp(str[1], "game_id") == 0){
+            }else if(strncmp(str[1], "game_id",7) == 0){
+              data[i][1][10] = '\0';
               strcpy(result, data[i][1]);
-            }else if(strcmp(str[1], "home_team") == 0){
+            }else if(strncmp(str[1], "home_team",9) == 0){
               strcpy(result, data[i][2]);
-            }else if(strcmp(str[1], "away_team") == 0){
+            }else if(strncmp(str[1], "away_team",9) == 0){
+              strcpy(result, data[i][3]);
+            }else if(strncmp(str[1], "week",4) == 0){
               strcpy(result, data[i][4]);
-            }else if(strcmp(str[1], "week") == 0){
+            }else if(strncmp(str[1], "season",6) == 0){
               strcpy(result, data[i][5]);
-            }else if(strcmp(str[1], "season") == 0){
+            }else if(strncmp(str[1], "home_score",10) == 0){
               strcpy(result, data[i][6]);
-            }else if(strcmp(str[1], "home_score") == 0){
+            }else if(strncmp(str[1], "away_score",10) == 0){
               strcpy(result, data[i][7]);
-            }else if(strcmp(str[1], "away_score") == 0){
-              strcpy(result, data[i][8]);
             }else{
-              strcpy(result, "unknown1");
+              strcpy(result, "unknown");
             }
+            for(int  i = 25; i > 9; i--){
+              str[0][i+1] = str[0][i];
+              if(i == 10){
+                str[0][10] = ' ';
+              }
+            }
+            printf("\n%s \n", str[0]);
             break;
           }else{
-            strcpy(result, "unknown2");
+            strcpy(result, "unknown");
           }
         }
 
