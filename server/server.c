@@ -111,15 +111,14 @@ void echo(int connfd){
     }
 }
 
-int main()
+int main(int argc, char **argv)
 {
     int listenfd, clientSocket;
     socklen_t clientLen;
     struct sockaddr_storage clientAddr;
-    char* portNum = "30000";
-    char* host = "localhost";
+    char* portNum = argv[2]; //"30000";
     char client_hostname[MAXLINE], client_port[MAXLINE];
-    FILE *fp = fopen("data_base.csv", "r");
+    FILE *fp = fopen(argv[1], "r");
 
     int i = 0;
     char *pt;

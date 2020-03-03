@@ -48,8 +48,8 @@ int main(int argc, char **argv)
     int clientfd;
     int MAXLINE = 256;
     char* command;
-    char* hostName = "localhost"; //change to argv[1] later
-    char* portNum = "30000";    //change to argv[2] later
+    char* hostName = argv[1];  //"localhost"; //change to argv[1] later
+    char* portNum =  argv[2]; //"30000";    //change to argv[2] later
     char input[MAXLINE];
 
     clientfd = open_clientfd(hostName,portNum);
