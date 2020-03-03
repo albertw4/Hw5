@@ -59,9 +59,7 @@ int main(int argc, char **argv)
         fgets(input,MAXLINE,stdin);
         char *newline = strchr(input, '\n');
         if(newline){*newline = 0;}
-        command = strtok(input, " ");
-
-        printf("Command is |%s|, length is %d\n", command, strlen(command));
+        command = strtok(input, "\n");
 
         if(strcmp(command, "quit") == 0){
             break;
