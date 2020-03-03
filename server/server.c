@@ -9,7 +9,7 @@
 
 typedef struct sockaddr SA;
 int MAXLINE = 256;
-char data[300][8][10];
+char data[300][8][11];
 
 
 int open_listenfd(char* portNum){
@@ -57,7 +57,7 @@ void echo(int connfd){
     printf("server started");
     while((n = read(connfd, buf, MAXLINE)) != 0) {
         char * token = strtok(buf, " ");
-        char str[2][10];
+        char str[2][11];
         char result[100];
         int i = 0;
         int length = 0;
@@ -75,7 +75,6 @@ void echo(int connfd){
             if(strncmp(str[1], "type",4) == 0){
               strcpy(result, data[k][0]);
             }else if(strncmp(str[1], "game_id",7) == 0){
-              data[k][1][10] = '\0';
               strcpy(result, data[k][1]);
             }else if(strncmp(str[1], "home_team",9) == 0){
               strcpy(result, data[k][2]);
@@ -93,14 +92,7 @@ void echo(int connfd){
               strcpy(result, "unknown");
             }
 
-            int j;
-            for(j = 25; j > 9; j--){
-              str[0][j+1] = str[0][j];
-              if(j == 10){
-                str[0][10] = ' ';
-              }
-            }
-            printf("\n%s \n", str[0]);
+            printf("\n%s %s\n", str[0], str[1]);
             break;
           }else{
             strcpy(result, "unknown");
@@ -131,6 +123,7 @@ int main(int argc, char **argv)
         pt = strtok (line,",");
         while (pt != NULL) {
             strcpy(data[i][j], pt);
+            printf("|%s|", data[i][j]);
             pt = strtok (NULL, ",");
             j++;
         }
@@ -141,14 +134,6 @@ int main(int argc, char **argv)
       printf("cant open file");
     }
 
-    int j, k;
-    for(j = 0; j < 270; j++){
-      printf("%d:",j);
-      for(k = 0; k <8; k++){
-        printf(" %s", data[j][k]);
-      }
-      printf("\n");
-    }
 
     while(1){
         listenfd = open_listenfd(portNum); //change to argv[1] later
