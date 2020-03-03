@@ -94,7 +94,7 @@ void echo(int connfd){
             }
 
             int j;
-            for(int  j = 25; j > 9; j--){
+            for(j = 25; j > 9; j--){
               str[0][j+1] = str[0][j];
               if(j == 10){
                 str[0][10] = ' ';
