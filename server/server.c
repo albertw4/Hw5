@@ -68,32 +68,35 @@ void echo(int connfd){
            token = strtok(NULL, " ");
         }
 
-        for(int i = 1; i < 270; i++){
+        int k;
+        for(k = 1; k < 270; k++){
 
-          if(strncmp(str[0], data[i][1],10) == 0){
+          if(strncmp(str[0], data[k][1],10) == 0){
             if(strncmp(str[1], "type",4) == 0){
-              strcpy(result, data[i][0]);
+              strcpy(result, data[k][0]);
             }else if(strncmp(str[1], "game_id",7) == 0){
-              data[i][1][10] = '\0';
-              strcpy(result, data[i][1]);
+              data[k][1][10] = '\0';
+              strcpy(result, data[k][1]);
             }else if(strncmp(str[1], "home_team",9) == 0){
-              strcpy(result, data[i][2]);
+              strcpy(result, data[k][2]);
             }else if(strncmp(str[1], "away_team",9) == 0){
-              strcpy(result, data[i][3]);
+              strcpy(result, data[k][3]);
             }else if(strncmp(str[1], "week",4) == 0){
-              strcpy(result, data[i][4]);
+              strcpy(result, data[k][4]);
             }else if(strncmp(str[1], "season",6) == 0){
-              strcpy(result, data[i][5]);
+              strcpy(result, data[k][5]);
             }else if(strncmp(str[1], "home_score",10) == 0){
-              strcpy(result, data[i][6]);
+              strcpy(result, data[k][6]);
             }else if(strncmp(str[1], "away_score",10) == 0){
-              strcpy(result, data[i][7]);
+              strcpy(result, data[k][7]);
             }else{
               strcpy(result, "unknown");
             }
-            for(int  i = 25; i > 9; i--){
-              str[0][i+1] = str[0][i];
-              if(i == 10){
+
+            int j;
+            for(int  j = 25; j > 9; j--){
+              str[0][j+1] = str[0][j];
+              if(j == 10){
                 str[0][10] = ' ';
               }
             }
@@ -139,9 +142,10 @@ int main()
       printf("cant open file");
     }
 
-    for(int j = 0; j < 270; j++){
+    int j, k;
+    for(j = 0; j < 270; j++){
       printf("%d:",j);
-      for(int k = 0; k <8; k++){
+      for(k = 0; k <8; k++){
         printf(" %s", data[j][k]);
       }
       printf("\n");
