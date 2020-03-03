@@ -74,25 +74,32 @@ void echo(int connfd){
           if(strncmp(str[0], data[k][1],10) == 0){
             if(strncmp(str[1], "type",4) == 0){
               strcpy(result, data[k][0]);
+              printf("\n%s %s\n", str[0], "type");
             }else if(strncmp(str[1], "game_id",7) == 0){
               strcpy(result, data[k][1]);
+              printf("\n%s %s\n", str[0], "game_id");
             }else if(strncmp(str[1], "home_team",9) == 0){
               strcpy(result, data[k][2]);
+              printf("\n%s %s\n", str[0], "home_team");
             }else if(strncmp(str[1], "away_team",9) == 0){
               strcpy(result, data[k][3]);
+              printf("\n%s %s\n", str[0], "away_team");
             }else if(strncmp(str[1], "week",4) == 0){
               strcpy(result, data[k][4]);
+              printf("\n%s %s\n", str[0], "week");
             }else if(strncmp(str[1], "season",6) == 0){
               strcpy(result, data[k][5]);
+              printf("\n%s %s\n", str[0], "season");
             }else if(strncmp(str[1], "home_score",10) == 0){
               strcpy(result, data[k][6]);
+              printf("\n%s %s\n", str[0], "home_score");
             }else if(strncmp(str[1], "away_score",10) == 0){
               strcpy(result, data[k][7]);
+              printf("\n%s %s\n", str[0], "away_score");
             }else{
               strcpy(result, "unknown");
             }
 
-            printf("\n%s %s\n", str[0], str[1]);
             break;
           }else{
             strcpy(result, "unknown");
